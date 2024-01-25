@@ -29,17 +29,27 @@ client.on_subscribe = subscribe
 client.connect()
 client.loop_background()
 counter=10
+sensor_type=0
 while True:
     counter = counter -1
     if counter <=0:
         counter =10
         print("Random data is publishing...")
-        temp = random.randint(10,20)
-        client.publish("cambien1", temp)
-        humi = random.randint(40,60)
-        client.publish("cambien2", humi)
-        light = random.randint(100,500)
-        client.publish("cambien3", light)
+        if sensor_type==0:
+            print("Temp...")
+            temp = random.randint(10,20)
+            client.publish("cambien1", temp)
+            sensor_type=1
+        elif sensor_type==1:
+            print("Humi...")
+            humi = random.randint(40,60)
+            client.publish("cambien2", humi)
+            sensor_type=2
+        elif sensor_type==2:
+            print("Light...")
+            light = random.randint(100,500)
+            client.publish("cambien3", light)
+            sensor_type=0
 
     time.sleep(1)
     pass
